@@ -1,0 +1,67 @@
+<div class="container">
+  <h2>Registro de Usuario</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <!-- EMAIL -->
+    <div class="field">
+      <label>Email:</label>
+      <input formControlName="email" type="email" placeholder="Ingresá tu email">
+
+      <!-- Estado PENDING (verificando...) -->
+      <div class="pending" *ngIf="email.pending">
+        ⏳ Verificando email...
+      </div>
+
+      <!-- Errores sincrónicos -->
+      <div class="error" *ngIf="email.touched && email.errors?.['required']">
+        El email es obligatorio.
+      </div>
+      <div class="error" *ngIf="email.touched && email.errors?.['email']">
+        El formato del email no es válido.
+      </div>
+
+      <!-- Error asíncrono -->
+      <div class="error" *ngIf="email.errors?.['emailTaken']">
+        ❌ El email ya está registrado.
+      </div>
+
+      <!-- OK -->
+      <div class="ok" *ngIf="email.valid && !email.pending">
+        ✅ Email disponible.
+      </div>
+    </div>
+
+    <!-- DNI -->
+    <div class="field">
+      <label>DNI:</label>
+      <input formControlName="dni" type="text" placeholder="Ingresá tu DNI">
+
+      <!-- Estado PENDING -->
+      <div class="pending" *ngIf="dni.pending">
+        ⏳ Verificando DNI...
+      </div>
+
+      <!-- Errores sincrónicos -->
+      <div class="error" *ngIf="dni.touched && dni.errors?.['required']">
+        El DNI es obligatorio.
+      </div>
+
+      <!-- Error asíncrono -->
+      <div class="error" *ngIf="dni.errors?.['dniTaken']">
+        ❌ El DNI ya está registrado.
+      </div>
+
+      <!-- OK -->
+      <div class="ok" *ngIf="dni.valid && !dni.pending">
+        ✅ DNI disponible.
+      </div>
+    </div>
+
+    <!-- BOTÓN -->
+    <button type="submit" [disabled]="form.invalid || form.pending">
+      Registrar
+    </button>
+
+  </form>
+</div>
